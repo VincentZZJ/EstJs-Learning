@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./extjs/resources/css/ext-all.css">
+    <script type="text/javascript" src="extjs/bootstrap.js"></script>
+    <script type="text/javascript" src="extjs/locale/ext-lang-zh_CN.js"></script>
+    <title>Title</title>
+    <script>
+        Ext.onReady(function () {
+            function f1() {                        // 事件的绑定测试
+                alert('h1');
+                return ;
+            }
+            function f2() {
+                alert('h2');
+                return ;
+            }
+            var button = Ext.get("btn");
+            button.addListener('click',f1);         // 绑定事件，并且同类不覆盖
+            button.addListener('click',f2);
+            // 事件的受管监听器
+            Ext.create('Ext.toolbar.Toolbar',{
+                renderTo : Ext.getBody(),
+                bodyPadding : 5,
+                width : 600,
+                items : [
+                    {
+                        text :' new ',id :'createBtn',iconCls : 'newIcon'
+                    },
+                    {
+                        text :' open ',id :'openBtn',iconCls : 'openIcon'
+                    },
+                    {
+                        text :' save ',id :'saveBtn',iconCls : 'saveIcon'
+                    },
+                    {
+                        text :' destroy ',handler : function () {
+                            Ext.getCmp('createBtn').destroy();
+                        }
+                    }
+                ]
+            });
+            function createFn() {
+                alert('new');
+            }
+            function openFn() {
+                alert('open');
+            }
+            function saveFn() {
+                alert('save');
+            }
+            var creBtn = Ext.getCmp('createBtn');
+            creBtn.on('click',createFn);
+            creBtn.addManagedListener(Ext.getCmp('openBtn'),'click',openFn);
+            creBtn.addManagedListener(Ext.getCmp('saveBtn'),'click',saveFn);
+        })
+    </script>
+</head>
+<body>
+    <button id="btn">Click Me</button>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./extjs/resources/css/ext-all.css">
+    <script type="text/javascript" src="extjs/bootstrap.js"></script>
+    <script type="text/javascript" src="extjs/locale/ext-lang-zh_CN.js"></script>
+    <title>Title</title>
+    <script>
+        Ext.onReady(function () {
+            Ext.create('Ext.panel.Panel',{
+                layout : 'accordion',
+                title : 'Layout-Accordion',
+                frame : true,
+                height : 200,
+                width : 250,
+                renderTo : Ext.getBody(),
+                bodyPadding : 5,
+                defaults : {
+                    bodyStyle : 'background-color : #fff;padding : 15px'
+                },
+                items : [{                      // 每次显示一个，也就是点另外一个，其他都是关闭状态
+                    title : 'panel one',
+                    html : 'blank one'
+                },{
+                    title : 'panel two',
+                    html : 'blank two'
+                },{
+                    title : 'panel three',
+                    html : 'blank three'
+                }]
+            });
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

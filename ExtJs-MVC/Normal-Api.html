@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./extjs/resources/css/ext-all.css">
+    <script type="text/javascript" src="extjs/bootstrap.js"></script>
+    <script type="text/javascript" src="extjs/locale/ext-lang-zh_CN.js"></script>
+    <title>Title</title>
+    <script>
+        Ext.onReady(function () {
+            // 测试apply()对象属性拷贝方法
+            var panel_apply = new Ext.Panel({
+                title : ' test Ext.apply',
+                with : '280',
+                renderTo : Ext.getBody()
+            });
+            let tarObj = {};
+            let srcObj = {};
+            srcObj.name = "Vincent";
+            srcObj.age = 22;
+            srcObj.sayName = function () {
+                console.log(this.name);
+            };
+            Ext.apply(tarObj,srcObj);
+            Ext.Msg.alert('testExample','tarObj的属性如下：<br/>' + tarObj.name + "<br/>" + tarObj.age);
+            tarObj.sayName();
+            srcObj.name = 'Marry';
+            tarObj.sayName();
+        });
+        // let tarObj = {};
+        // let srcObj = {};
+        // srcObj.name = "Vincent";
+        // srcObj.age = 22;
+        // srcObj.sayName = function () {
+        //     console.log(this.name);
+        // };
+        // Object.assign(tarObj,srcObj);
+        // tarObj.sayName();
+        // srcObj.name = "Marry";
+        // tarObj.sayName();
+    </script>
+</head>
+<body>
+
+</body>
+</html>

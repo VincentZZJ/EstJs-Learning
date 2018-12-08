@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./extjs/resources/css/ext-all.css">
+    <script type="text/javascript" src="extjs/bootstrap.js"></script>
+    <script type="text/javascript" src="extjs/locale/ext-lang-zh_CN.js"></script>
+    <title>Title</title>
+    <script>
+        Ext.onReady(function () {
+            var msgBox = Ext.MessageBox.show({
+                title : 'tips',
+                msg : ' update the data dynamically',
+                modal : true,
+                width : 300,
+                progress : true
+            });
+            var count = 0;
+            var percentage = 0;
+            var progressText = '';
+            var task = {
+                run : function () {
+                    count++;
+                    percentage = count/10;
+                    progressText = 'Recent progress is ' + percentage*100 + '%';
+                    msgBox.updateProgress(percentage,progressText,'rightNow is ' + Ext.util.Format.date(new Date(),'Y-m-d g;i;s A'));
+                    if(count>10){
+                        Ext.TaskManager.stop(task);
+                        msgBox.hide();
+                    }
+                },
+                interval : 1000
+            }
+            Ext.TaskManager.start(task);            // 创建一个任务对象，并添加进封装好的TaskManager中
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

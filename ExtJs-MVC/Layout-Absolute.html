@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./extjs/resources/css/ext-all.css">
+    <script type="text/javascript" src="extjs/bootstrap.js"></script>
+    <script type="text/javascript" src="extjs/locale/ext-lang-zh_CN.js"></script>
+    <title>Title</title>
+    <script>
+        Ext.onReady(function () {
+            Ext.create('Ext.panel.Panel',{
+                layout : 'card',
+                activeItem : 0,     // 设置默认显示第一个面板
+                title : 'Layout-Absolute',
+                frame : true,
+                height : 150,
+                width : 300,
+                renderTo : Ext.getBody(),
+                // bodyPadding : 5,
+                defaults : {
+                    frame : true,
+                    height : 60,
+                    width : 80,
+                    bodyStyle : 'background-color;#fff'
+                },
+                items : [
+                    {
+                        x : 20,
+                        y : 20,
+                        html : 'panel one',
+                        title : 'panel ont'
+                    }
+                ]
+            })
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

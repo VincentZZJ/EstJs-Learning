@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./extjs/resources/css/ext-all.css">
+    <script type="text/javascript" src="extjs/bootstrap.js"></script>
+    <script type="text/javascript" src="extjs/locale/ext-lang-zh_CN.js"></script>
+    <title>Title</title>
+    <script>
+        Ext.onReady(function () {
+            Ext.create('Ext.panel.Panel',{
+                title : 'Layout-Anchor',
+                frame : false,
+                width : 300,
+                renderTo : Ext.getBody(),
+                defaults : {
+                    bodyStyle : 'background-color:#fff;'
+                },
+                items : [{
+                    xtype : 'panel',
+                    layout : 'anchor',
+                    title : 'Anchor-Percentage',
+                    width : 300,
+                    height : 300,
+                    defaults : {
+                        bodyStyle : 'background-color:#ccc'
+                    },
+                    items : [{
+                        anchor : '50% 50%',         // 针对父元素的宽高进行占比
+                        title : 'per 1'
+                    },{
+                        anchor : '60% 60%',
+                        title : 'per 2'
+                    }]
+                },{
+                    xtype : 'panel',
+                    layout : 'anchor',
+                    title : 'Anchor-Offsets',
+                    width : 300,
+                    height : 300,
+                    defaults : {
+                        bodyStyle : 'background-color:#aaa'
+                    },
+                    items : [{
+                        anchor : '-50 -50',             // 离直接父元素的距离‘右下’
+                        title : 'off 1'
+                    }]
+                },{
+                    xtype : 'panel',
+                    layout : 'anchor',
+                    title : 'Anchor-Sides',
+                    width : 300,
+                    height : 300,
+                    defaults : {
+                        bodyStyle : 'background-color:#888'
+                    },
+                    items : [{
+                        // anchor : 'r b',
+                        title : 'side 1',
+                        width : 200,                // 所谓的根据差值进行计算，就是300-200后差值为100，由于父元素实际宽度为298，则子元素的宽度为298-100，如此类推
+                        height : 200
+                    },{
+                        anchor : 'r b',
+                        width : 250,
+                        height : 250,
+                        title : 'side 2'
+                    }]
+                }]
+            })
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

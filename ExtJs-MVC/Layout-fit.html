@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./extjs/resources/css/ext-all.css">
+    <script type="text/javascript" src="extjs/bootstrap.js"></script>
+    <script type="text/javascript" src="extjs/locale/ext-lang-zh_CN.js"></script>
+    <title>Title</title>
+    <script>
+        Ext.onReady(function () {
+            Ext.create('Ext.panel.Panel',{
+                layout : 'fit',
+                title : 'Layout-Fit',
+                frame : true,
+                height : 150,
+                width : 250,
+                renderTo : Ext.getBody(),
+                defaults : {
+                    bodyStyle : 'background-color; #fff'
+                },
+                items : [{                      // 该种布局为自适应布局，多层同级并存的panel，只显示第一个
+                    title : 'panel one',
+                    html : 'blank one'
+                },{
+                    title : 'panel two',
+                    html : 'blank two'
+                }]
+            });
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

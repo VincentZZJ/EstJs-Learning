@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./extjs/resources/css/ext-all.css">
+    <script type="text/javascript" src="extjs/bootstrap.js"></script>
+    <script type="text/javascript" src="extjs/locale/ext-lang-zh_CN.js"></script>
+    <title>Title</title>
+    <script>
+        Ext.onReady(function () {
+            var jsonstr = "{name:'vincent',age:'22'}";
+            var obj = Ext.JSON.decode(jsonstr);     // 转化为JSON对象
+            console.log(obj);
+            var objstr = Ext.JSON.encode(obj);      // JSON对象转化为字符串
+            console.log(objstr);
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

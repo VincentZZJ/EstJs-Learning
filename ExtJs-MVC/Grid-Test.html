@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Examples</title>
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<link href="" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="./extjs/resources/css/ext-all.css">
+   	<script type="text/javascript" src="extjs/bootstrap.js"></script>
+    <script type="text/javascript" src="extjs/locale/ext-lang-zh_CN.js"></script>
+    <script type="text/javascript">
+    	Ext.onReady(function () {
+    		// 创建表格数据
+    		var datas = [
+    			[100,'Vincent',22],[101,'Mary',21],[102,'John',23]
+    		];
+    		// 创建Grid表格组件
+    		Ext.create('Ext.grid.Panel',{
+    			title : 'Grid-Test',
+    			renderTo : Ext.getBody(),
+    			width : 400,
+    			height : 130,
+    			frame : true,
+    			viewConfig : {
+    				forceFit : true,
+    				stripeRows : true		// 在表格中显示斑马线
+    			},
+    			store : {
+    				// 配置数据源
+    				fields : ['id','name','age'],
+    				proxy : {
+    					type : 'memory', // Ext.data.proxy.Memory内存代理
+    					data : datas,
+    					reader : 'array' // Ext.data.reader.Array解析器
+    				},
+    				autoLoad : true		// 自动加载
+    			},
+    			columns : [
+    				// 配置表格列名
+    				{header : 'ID',width : 100, dataIndex : 'id', sortable : true},
+    				{header : 'Name',width : 140, dataIndex : 'name', sortable : true},
+    				{header : 'Age',width : 100, dataIndex : 'age', sortable : true}
+    			]
+    		});
+    	});
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

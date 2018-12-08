@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./extjs/resources/css/ext-all.css">
+    <script type="text/javascript" src="extjs/bootstrap.js"></script>
+    <script type="text/javascript" src="extjs/locale/ext-lang-zh_CN.js"></script>
+    <title>Title</title>
+    <script>
+        Ext.onReady(function () {
+            var panel = Ext.create('Ext.panel.Panel',{
+                layout : 'card',
+                activeItem : 0,     // 设置默认显示第一个面板
+                title : 'Layout-Card',
+                frame : true,
+                height : 150,
+                width : 250,
+                renderTo : Ext.getBody(),
+                bodyPadding : 5,
+                defaults : {
+                    bodyStyle : 'background-color;#fff;padding:15px'
+                },
+                items : [{                      // 每次显示一个，但是通过给按钮绑定方法来进行换页
+                    title : 'panel one',
+                    html : 'blank one',
+                    id:'p1'
+                },{
+                    title : 'panel two',
+                    html : 'blank two',
+                    id:'p2'
+                },{
+                    title : 'panel three',
+                    html : 'blank three',
+                    id:'p3'
+                }],
+                buttons : [{
+                    text : 'pre',
+                    handler : changePage
+                },{
+                    text : 'next',
+                    handler : changePage
+                }]
+            });
+            function changePage(btn) {
+                var index = Number(panel.layout.activeItem.id.substring(1));
+                if(btn.text == 'pre'){
+                    index -=1;
+                    if(index<=1){
+                        index = 1;
+                    }
+                }else{
+                    index +=1;
+                    if(index>3){
+                        index = 3;
+                    }
+                }
+                panel.layout.setActiveItem('p'+index);
+            }
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

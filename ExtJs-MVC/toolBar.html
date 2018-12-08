@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./extjs/resources/css/ext-all.css">
+    <script type="text/javascript" src="extjs/bootstrap.js"></script>
+    <script type="text/javascript" src="extjs/locale/ext-lang-zh_CN.js"></script>
+    <title>Title</title>
+    <script>
+        Ext.onReady(function () {
+            var toolBar = new Ext.toolbar.Toolbar({     // 创建工具栏
+                renderTo : 'toolBar',
+                width : 300
+            });
+            var fileMenu = new Ext.menu.Menu({          // 文件菜单
+                shadow : 'frame',
+                allowOtherMenus : true,
+                items : [
+                    new Ext.menu.Item({
+                        text : 'new',
+                        handler : onMenuItem
+                    }),
+                    {text : 'open' , handler : onMenuItem},
+                    {text : 'close' , handler : onMenuItem}
+                ]
+            });
+            var editMenu = new Ext.menu.Menu({          // 编辑菜单
+                shadow : 'drop',
+                allowOtherMenus : true,
+                items : [
+                    {text : 'copy',handler : onMenuItem},
+                    {text : 'stick',handler : onMenuItem},
+                    {text : 'cut',handler : onMenuItem}
+                ]
+            });
+            toolBar.add(                                // 在新建的工具栏对象中把二级菜单添加进去
+                {text : 'files', menu : fileMenu},
+                {text : 'edit', menu : editMenu}
+            );
+            function onMenuItem(item) {
+                alert(item.text);
+            }
+        })
+    </script>
+</head>
+<body>
+    <div id="toolBar"></div>
+</body>
+</html>

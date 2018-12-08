@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./extjs/resources/css/ext-all.css">
+    <script type="text/javascript" src="extjs/bootstrap.js"></script>
+    <script type="text/javascript" src="extjs/locale/ext-lang-zh_CN.js"></script>
+    <title>Title</title>
+    <script>
+        Ext.onReady(function () {
+            Ext.QuickTips.init();
+            Ext.create('Ext.form.Panel',{
+                title : 'testVerify',
+                width : 300,
+                frame : true,
+                renderTo : Ext.getBody(),
+                bodyPadding :5,
+                defaultType : 'textfield',
+                fieldDefaults : {
+                    labelSeparator : '： ',
+                    labelWidth : 80,
+                    width :270,
+                    msgTarget : 'side'
+                },
+                items :[{
+                    fieldLabel : 'email',
+                    vtype : 'email'
+                },{
+                    fieldLabel : 'alpha',
+                    vtype : 'alpha'
+                },{
+                    fieldLabel : 'url',
+                    vtype : 'url'
+                },{
+                    fieldLabel : 'alphanum',
+                    vtype : 'alphanum'
+                }]
+            });
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
