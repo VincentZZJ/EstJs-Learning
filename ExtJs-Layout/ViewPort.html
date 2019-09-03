@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Examples</title>
+<link rel="stylesheet" type="text/css" href="extjs/resources/css/ext-all.css">
+<script src="extjs/bootstrap.js"></script>
+<script src="extjs/locale/ext-lang-zh_CN.js"></script>
+<script type="text/javascript">
+	Ext.onReady(function () {
+		// viewport代表页面整个显示区域，这是常用的整页布局
+		Ext.create('Ext.container.Viewport',{
+			layout : 'border',
+			defaults:{collapsible:true},
+			items : [{
+				title : 'north Panel',
+				html : 'North',
+				region : 'north',
+				height : 60
+			},{
+				title : 'south Panel',
+				html : 'South',
+				region : 'south',
+				height : 60
+			},{
+				title : 'west Panel',
+				html : 'West',
+				region : 'west',
+				width : 100
+			},{
+				title : 'east Panel',
+				html : 'East',
+				region : 'east',
+				width : 150
+			},{
+				title : 'center Panel',
+				html : 'Center',
+				region : 'center'
+			}]
+		});
+		// Ext.create('Ext.tab.Panel',{
+		// 	frame : true,
+		// 	activeTab : 1,
+		// 	alias : 'widget.tabtree',
+		// 	items : [{
+		// 		title : 'tab页面1',
+		// 		html : 'here is page one'
+		// 	},{
+		// 		title : 'tab页面2',
+		// 		html : 'here is page two'
+		// 	},{
+		// 		title : 'tab页面3',
+		// 		html : 'here is page three'
+		// 	}]
+		// });
+	});
+</script>
+</head>
+<body>
+    <!-- <div id="mainBox"></div> -->
+</body>
+</html>

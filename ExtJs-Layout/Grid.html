@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Examples</title>
+<link rel="stylesheet" type="text/css" href="extjs/resources/css/ext-all.css">
+<script src="extjs/bootstrap.js"></script>
+<script src="extjs/locale/ext-lang-zh_CN.js"></script>
+<script type="text/javascript">
+	Ext.onReady(function () {
+		// 创建表单数据
+		let data = [
+			[100,true,'Vincent',22,new Date(1996,10,21)],
+			[101,false,'Mary',23,new Date(1997,10,21)],
+			[102,true,'Vincent',22,new Date(1996,10,21)],
+			[103,false,'Mary',23,new Date(1997,10,21)],
+			[104,true,'John',24,new Date(1998,10,21)]
+		];
+		// Code12-1:创建Grid组件
+		Ext.create('Ext.grid.Panel',{
+			title : '普通表格',
+			renderTo : 'Code12_1',
+			width : 510,
+			height : 200,
+			frame : true,
+			// viewConfig : {		// 视图相关参数的配置
+			// 	forceFit : false,		//
+			// 	stripeRows : false 		// 
+			// },
+			store : {
+				fields : ['id','leader','name','age'],		// 定义字段
+				proxy : {
+					type : 'memory',				// 内存代理数据
+					data : data,					// 读取数据
+					reader : 'array'				// 解析器
+				},
+				autoLoad : true						// 自动加载
+			},
+			columns : [								// 表格的内容设置
+				{header : 'id', width :100, dataIndex : 'id' , sortable : true},
+				{header : '领导', width :100, dataIndex : 'leader' },
+				{header : '姓名', width :200, dataIndex : 'name' },
+				{header : '年龄', width :100, dataIndex : 'age' , sortable : true}
+			]
+		});
+		// Code12-2:表格列实例
+		Ext.create('Ext.grid.Panel',{
+			title : '表格列实例',
+			renderTo : 'Code12_2',
+			width : 900,
+			height : 200,
+			frame : true,
+			// viewConfig : {		// 视图相关参数的配置
+			// 	forceFit : false,		//
+			// 	stripeRows : false 		// 
+			// },
+			store : {
+				fields : ['id','leader','name','age','date'],		// 定义字段
+				proxy : {
+					type : 'memory',				// 内存代理数据
+					data : data,					// 读取数据
+					reader : 'array'				// 解析器
+				},
+				autoLoad : true						// 自动加载
+			},
+			columns : [								// 表格的内容设置
+				{header : 'id', width :50, dataIndex : 'id' , sortable : true},
+				{header : '姓名', width :100, dataIndex : 'name'},
+				{header : '领导', width : 100, dataIndex : 'leader', 		// 可以跟上面普通表格比较，表格列的不一样
+					xtype : 'booleancolumn',								// Ext库中写好的组件，直接通过booleancolumn调用
+					trueText : '是',
+					falseText : '否'
+				},
+				{header : '年龄', width :100, dataIndex : 'age' , sortable : true},
+				{header : '生日', width : 200, dataIndex : 'date', 
+					xtype : 'datecolumn',
+					format : 'Y年m月d日'
+				},
+				{header : '操作', width: 60, 
+					xtype : 'actioncolumn',									// 添加操作列
+					items : [{
+						icon : 'image/edit.png',											// 添加图标链接				
+						handler(grid , rowIndex, colIndex){					
+							// 获取被操作的数据记录
+							let rec = grid.getStore().getAt(rowIndex);			// 记录当前哪行被编辑
+							alert('当前编辑：' + rec.get('name'));
+						}
+					},{	
+						icon : 'image/delete.png',											// 添加图标链接				
+						handler(grid , rowIndex, colIndex){					
+							// 获取被操作的数据记录
+							let rec = grid.getStore().getAt(rowIndex);			// 记录当前哪行被编辑
+							alert('当前删除：' + rec.get('name'));
+						}
+					},{	
+						icon : 'image/save.png',											// 添加图标链接				
+						handler(grid , rowIndex, colIndex){					
+							// 获取被操作的数据记录
+							let rec = grid.getStore().getAt(rowIndex);			// 记录当前哪行被编辑
+							alert('当前保存：' + rec.get('name'));
+						}
+					}]
+				},
+				{header : '描述',width : 150,
+					xtype : 'templatecolumn',
+					tpl : '{name}<tpl if="leader==false">不</tpl>是组长'
+				}
+			]
+		});
+		// Code12_6:自定义渲染函数 —— renderer指向渲染函数
+		Ext.create('Ext.grid.Panel',{
+			title : '表格列实例',
+			renderTo : 'Code12_2',
+			width : 900,
+			height : 200,
+			frame : true,
+			// viewConfig : {		// 视图相关参数的配置
+			// 	forceFit : false,		//
+			// 	stripeRows : false 		// 
+			// },
+			store : {
+				fields : ['id','leader','name','age','date'],		// 定义字段
+				proxy : {
+					type : 'memory',				// 内存代理数据
+					data : data,					// 读取数据
+					reader : 'array'				// 解析器
+				},
+				autoLoad : true						// 自动加载
+			},
+			columns : [								// 表格的内容设置
+				{header : 'id', width :50, dataIndex : 'id' , sortable : true},
+				{header : '姓名', width :100, dataIndex : 'name'},
+				{header : '领导', width : 100, dataIndex : 'leader', 		// 可以跟上面普通表格比较，表格列的不一样
+					// 自定义渲染函数
+					renderer : formatLeader
+				},
+				{header : '年龄', width :100, dataIndex : 'age' , sortable : true,
+					// 自定义渲染函数
+					renderer : formatAge
+				},
+				{header : '生日', width : 200, dataIndex : 'date', 
+					// 格式化生日显示（与上一个实例进行对比）
+					renderer : Ext.util.Format.dateRenderer('Y年m月d日')
+				},
+				{header : '操作', width: 60, 
+					xtype : 'actioncolumn',									// 添加操作列
+					items : [{
+						icon : 'image/edit.png',											// 添加图标链接				
+						handler(grid , rowIndex, colIndex){					
+							// 获取被操作的数据记录
+							let rec = grid.getStore().getAt(rowIndex);			// 记录当前哪行被编辑
+							alert('当前编辑：' + rec.get('name'));
+						}
+					},{	
+						icon : 'image/delete.png',											// 添加图标链接				
+						handler(grid , rowIndex, colIndex){					
+							// 获取被操作的数据记录
+							let rec = grid.getStore().getAt(rowIndex);			// 记录当前哪行被编辑
+							alert('当前删除：' + rec.get('name'));
+						}
+					},{	
+						icon : 'image/save.png',											// 添加图标链接				
+						handler(grid , rowIndex, colIndex){					
+							// 获取被操作的数据记录
+							let rec = grid.getStore().getAt(rowIndex);			// 记录当前哪行被编辑
+							alert('当前保存：' + rec.get('name'));
+						}
+					}]
+				},
+				{header : '描述',width : 150,
+					xtype : 'templatecolumn',
+					tpl : '{name}<tpl if="leader==false">不</tpl>是组长'
+				}
+			]
+		});
+		// 自定义渲染函数
+		function formatAge(value,metadata) {
+			if(value<24){
+				metadata.style = "background-color:#cff";
+			}	
+			return value;
+		}
+		function formatLeader(value) {
+			return value ? '是':'否';
+		}
+		// Code12_7:单元格选择模式 
+		// (注册复选模式并修改别名)
+		Ext.ClassManager.setAlias('Ext.selection.CheckboxModel','selection.checkboxmodel');
+		var gridPanel = Ext.create('Ext.grid.Panel',{
+			title : '普通表格',
+			renderTo : 'Code12_7',
+			width : 910,
+			height : 200,
+			frame : true,
+			// 简单的单选模式
+			// selType : 'cellmodel',
+			// tbar : [{
+			// 	text : '取得所选单元格',
+			// 	handler : function () {
+			// 		var cell = gridPanel.getSelectionModel().getCurrentPosition();
+			// 		alert(cell.row + " : " + cell.column);
+			// 	}
+			// }],
+			// 复选框
+			multiSelect : true,
+			selModel : {
+				selType : 'checkboxmodel'
+			},
+			tbar : [{
+				text : '取得所选项',
+				handler : function () {
+					var msg = '';
+					var rows = gridPanel.getSelectionModel().getSelection();
+					for(var i=0;i<rows.length;i++){
+						msg = msg + rows[i].get('name') + '\n';
+					}
+					alert(msg);
+				}
+			}],
+			store : {
+				fields : ['id','leader','name','age','date'],		// 定义字段
+				proxy : {
+					type : 'memory',				// 内存代理数据
+					data : data,					// 读取数据
+					reader : 'array'				// 解析器
+				},
+				autoLoad : true						// 自动加载
+			},
+			columns : [								// 表格的内容设置
+				{header : 'id', width :100, dataIndex : 'id' , sortable : true},
+				{header : '领导', width :100, dataIndex : 'leader' },
+				{header : '姓名', width :200, dataIndex : 'name' },
+				{header : '生日', width :200, dataIndex : 'date' ,renderer : Ext.util.Format.dateRenderer('Y年m月d日')},
+				{header : '年龄', width :100, dataIndex : 'age' , sortable : true}
+			]
+		});
+		// Code12_12:表格分组
+		Ext.create('Ext.grid.Panel',{
+			title : '普通表格',
+			renderTo : 'Code12_12',
+			width : 910,
+			height : 200,
+			frame : true,
+			store : {
+				fields : ['id','leader','name','age'],		// 定义字段
+				groupField : 'age',					// 按年龄进行分组
+				proxy : {
+					type : 'memory',				// 内存代理数据
+					data : data,					// 读取数据
+					reader : 'array'				// 解析器
+				},
+				autoLoad : true						// 自动加载
+			},
+			columns : [								// 表格的内容设置
+				{header : 'id', width :100, dataIndex : 'id' , sortable : true},
+				{header : '领导', width :100, dataIndex : 'leader' },
+				{header : '姓名', width :200, dataIndex : 'name' },
+				{header : '年龄', width :100, dataIndex : 'age' , sortable : true}
+			],
+			features : [Ext.create('Ext.grid.feature.Grouping',{
+				groupByText : '分组',
+				showGroupsText : '显示分组',
+				groupHeaderTpl : '年龄：{name}({rows.length})',		// 显示分组的标题
+				startCollapsed : false
+			})]
+		});
+		// Code12_14:表格插件运用
+		Ext.create('Ext.grid.Panel',{
+			title : '普通表格',
+			renderTo : 'Code12_14',
+			width : 910,
+			height : 200,
+			frame : true,
+			store : {
+				fields : ['id','leader','name','age','date'],		// 定义字段
+				groupField : 'age',					// 按年龄进行分组
+				proxy : {
+					type : 'memory',				// 内存代理数据
+					data : data,					// 读取数据
+					reader : 'array'				// 解析器
+				},
+				autoLoad : true						// 自动加载
+			},
+			plugins : [
+				Ext.create('Ext.grid.plugin.RowEditing',{
+					clicksToEdit : 1				// 设置鼠标点击一次进入编辑,默认为2
+				})
+			],
+			columns : [								// 表格的内容设置
+				{header : 'id', width :100, dataIndex : 'id' , sortable : true},
+				{header : '领导', width :100, dataIndex : 'leader' ,
+					editor : {
+						xtype : 'textfield',
+						allowBlank : false
+					}
+				},
+				{header : '姓名', width :200, dataIndex : 'name' ,
+					editor : {
+						xtype : 'textfield',
+						allowBlank : false
+					}
+				},
+				{header : '年龄', width :100, dataIndex : 'age' , sortable : true,
+					editor : {
+						xtype : 'textfield',
+						allowBlank : false
+					}
+				},
+				{header : '生日', width :100, dataIndex : 'date' , sortable : true,
+					renderer : Ext.util.Format.dateRenderer('Y年m月d日'),
+					editor : {
+						xtype : 'datefield',
+						allowBlank : false
+					}
+				}
+			]
+		});
+		// Code12_16:表格拖拽
+		Ext.create('Ext.grid.Panel',{
+			title : '普通表格',
+			renderTo : 'Code12_16_1',
+			width : 910,
+			height : 200,
+			frame : true,
+			store : {
+				fields : ['id','leader','name','age','date'],		// 定义字段
+				groupField : 'age',					// 按年龄进行分组
+				proxy : {
+					type : 'memory',				// 内存代理数据
+					data : data,					// 读取数据
+					reader : 'array'				// 解析器
+				},
+				autoLoad : true						// 自动加载
+			},
+			viewConfig : {
+				plugins : [
+					Ext.create('Ext.grid.plugin.DragDrop',{
+						// clicksToEdit : 1				// 设置鼠标点击一次进入编辑,默认为2
+						dragGroup : 'Code12_16_1',		// 拖拽组
+						dropGroup : 'Code12_16_2'		// 释放组
+					})
+				],
+			},
+			columns : [								// 表格的内容设置
+				{header : 'id', width :100, dataIndex : 'id' , sortable : true},
+				{header : '领导', width :100, dataIndex : 'leader' ,
+					editor : {
+						xtype : 'textfield',
+						allowBlank : false
+					}
+				},
+				{header : '姓名', width :200, dataIndex : 'name' ,
+					editor : {
+						xtype : 'textfield',
+						allowBlank : false
+					}
+				},
+				{header : '年龄', width :100, dataIndex : 'age' , sortable : true,
+					editor : {
+						xtype : 'textfield',
+						allowBlank : false
+					}
+				},
+				{header : '生日', width :100, dataIndex : 'date' , sortable : true,
+					renderer : Ext.util.Format.dateRenderer('Y年m月d日'),
+					editor : {
+						xtype : 'datefield',
+						allowBlank : false
+					}
+				}
+			]
+		});
+		Ext.create('Ext.grid.Panel',{
+			title : '普通表格',
+			renderTo : 'Code12_16_2',
+			width : 910,
+			height : 200,
+			frame : true,
+			store : {
+				fields : ['id','leader','name','age','date'],		// 定义字段
+				groupField : 'age',					// 按年龄进行分组
+				proxy : {
+					type : 'memory',				// 内存代理数据
+					data : data,					// 读取数据
+					reader : 'array'				// 解析器
+				},
+				autoLoad : true						// 自动加载
+			},
+			viewConfig : {
+				plugins : [
+					Ext.create('Ext.grid.plugin.DragDrop',{
+						// clicksToEdit : 1				// 设置鼠标点击一次进入编辑,默认为2
+						dragGroup : 'Code12_16_2',		// 拖拽组
+						dropGroup : 'Code12_16_1'		// 释放组
+					})
+				],
+			},
+			columns : [								// 表格的内容设置
+				{header : 'id', width :100, dataIndex : 'id' , sortable : true},
+				{header : '领导', width :100, dataIndex : 'leader' ,
+					editor : {
+						xtype : 'textfield',
+						allowBlank : false
+					}
+				},
+				{header : '姓名', width :200, dataIndex : 'name' ,
+					editor : {
+						xtype : 'textfield',
+						allowBlank : false
+					}
+				},
+				{header : '年龄', width :100, dataIndex : 'age' , sortable : true,
+					editor : {
+						xtype : 'textfield',
+						allowBlank : false
+					}
+				},
+				{header : '生日', width :100, dataIndex : 'date' , sortable : true,
+					renderer : Ext.util.Format.dateRenderer('Y年m月d日'),
+					editor : {
+						xtype : 'datefield',
+						allowBlank : false
+					}
+				}
+			]
+		});
+	});
+</script>
+</head>
+<body>
+    <div id="Code12_1"></div>
+    <div id="Code12_2"></div>
+  	<div id="Code12_6"></div>
+  	<div id="Code12_7"></div>
+  	<div id="Code12_12"></div>
+  	<div id="Code12_14"></div>
+  	<div id="Code12_16_1"></div>
+  	<div id="Code12_16_2"></div>
+</body>
+</html>

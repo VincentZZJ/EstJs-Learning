@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Examples</title>
+<link rel="stylesheet" type="text/css" href="extjs/resources/css/ext-all.css">
+<script src="extjs/bootstrap.js"></script>
+<script src="extjs/locale/ext-lang-zh_CN.js"></script>
+<style type="text/css">
+	/**{margin: 0px;padding: 0px;}*/
+	.tab{margin:100px auto;}
+</style>
+<script type="text/javascript">
+	Ext.onReady(function () {
+		// add date component
+		Ext.create('Ext.panel.Panel',{
+			title : 'Calender',
+			frame : true,					// 允许渲染面板
+			collapsible : true,				// 允许面板展开和收缩
+			// renderTo : Ext.getBody(),	// 指定到某容器显示(Ext.getBody —— 指向body)
+			renderTo : 'dateBox',			// 指定到某容器显示(Ext.getBody —— 指向body)
+			width : 200,
+			bodyPadding : 5,				// 指的是title下真正放置组件内容的内边距
+			id : 'oTab',					// 添加自定义的Id
+			cls : 'tab',					// 添加自定义的className(可用于添加样式)
+			items : [
+				{  
+					// 向面板添加一个日期组件
+					xtype : 'datepicker',
+					minDate : new Date()
+				}
+			]
+		});
+	})
+</script>
+</head>
+<body>
+	<!-- dateBox -->
+    <div id="dateBox"></div>
+</body>
+</html>
